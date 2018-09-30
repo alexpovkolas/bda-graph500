@@ -10,8 +10,8 @@
 
 
 #define EDGE_FACTOR 16
-#define SCALE 8
-#define TESTS_AMOUNT 2
+#define SCALE 12
+#define TESTS_AMOUNT 10
 #define SEED 777
 #define DIRECTED false
 
@@ -75,26 +75,30 @@ igraph_real_t avg_distance(igraph_t *igraph){
     return result;
 }
 
-map<int, double> hist(igraph_t *igraph){
+map<int, int> hist(igraph_t *igraph){
     igraph_vector_t v;
 
     igraph_vector_init(&v, 0);
 
-    int result = igraph_degree(igraph, &v, igraph_vss_all(), IGRAPH_ALL, IGRAPH_LOOPS);
+    igraph_degree(igraph, &v, igraph_vss_all(), IGRAPH_ALL, IGRAPH_LOOPS);
 
     map<int, int> frequencies;
     for (long i=0; i<igraph_vector_size(&v); i++) {
         int degree = (long int) VECTOR(v)[i];
-        frequencies[degree]++;
+        if (degree < 100) {
+            frequencies[degree]++;
+        }
+
+//        if (degree < 10) {
+//            frequencies[degree]++;
+//        } else if (degree < 100) {
+//            frequencies[degree / 10 * 10]++;
+//        } else {
+//            frequencies[degree / 100 * 100]++;
+//        }
     }
 
-    igraph_integer_t nedges = igraph_ecount(igraph);
-    map<int, double> hist;
-    for(auto it = frequencies.cbegin(); it != frequencies.cend(); ++it) {
-        hist[it->first] = it->second / (double) nedges;
-    }
-
-    return hist;
+    return frequencies;
 }
 
 
@@ -116,7 +120,8 @@ int main(int argc, char** argv) {
     double distance_sum = 0;
 
 
-    map<int, double> histogram;
+    map<int, int> histogram;
+    igraph_integer_t nedges;
     for (int k = 0; k < test_amount; ++k) {
         uint64_t seed1 = k * seed, seed2 = k + seed;
 
@@ -126,12 +131,13 @@ int main(int argc, char** argv) {
 
         diameter_sum += diameter(&graph);
         distance_sum += avg_distance(&graph);
-        map<int, double> hist_map = hist(&graph);
+        map<int, int> hist_map = hist(&graph);
 
         for(auto it = hist_map.cbegin(); it != hist_map.cend(); ++it) {
-            cout << it->first << " " << it->second << "\n";
+            histogram[it->first] += it->second;
         }
 
+        nedges = igraph_ecount(&graph);
         igraph_destroy(&graph);
     }
 
@@ -144,6 +150,13 @@ int main(int argc, char** argv) {
     printf("Avg distance of the graph: %f\n",
            avg_distance);
 
+    for(auto it = histogram.cbegin(); it != histogram.cend(); ++it) {
+        cout << it->first << "\n";
+    }
+
+    for(auto it = histogram.cbegin(); it != histogram.cend(); ++it) {
+        cout << it->second / (double) nedges * 100 << "\n";
+    }
 
     double tests_stop = MPI_Wtime();
     double tests_time = tests_stop - tests_start;

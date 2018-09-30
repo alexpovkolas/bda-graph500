@@ -3,7 +3,7 @@
 
 # compile C with mpicc
 # compile CXX with mpicxx
-C_FLAGS = -g  
+C_FLAGS = -O3 -g  
 
 C_DEFINES = 
 
