@@ -283,6 +283,9 @@ MPI_pmpi_LIBRARY:FILEPATH=/usr/local/Cellar/mpich/3.2.1_2/lib/libpmpi.dylib
 //Path to a program.
 ProcessorCount_cmd_sysctl:FILEPATH=/usr/sbin/sysctl
 
+//The directory containing a CMake configuration file for igraph.
+igraph_DIR:PATH=igraph_DIR-NOTFOUND
+
 
 ########################
 # INTERNAL cache entries

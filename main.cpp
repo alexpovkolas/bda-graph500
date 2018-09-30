@@ -4,6 +4,9 @@
 #include "./generator/utils.h"
 #include "./aml/aml.h"
 #include "common.h"
+#include "igraph/igraph.h"
+//#include <igraph.h>
+
 
 
 int main(int argc, char** argv) {
@@ -12,7 +15,7 @@ int main(int argc, char** argv) {
     setup_globals();
 
 
-    int SCALE = 8;
+    int SCALE = 12;
     int edgefactor = 16;
 
     int64_t nedges[1];
@@ -31,13 +34,24 @@ int main(int argc, char** argv) {
     }
 
     // example of using
-    
+
 //    for (int i = 0; i < *nedges; ++i) {
 //        packed_edge edge = result[0][i];
 //        int64_t v0 = get_v0_from_edge(&edge);
 //        int64_t v1 = get_v1_from_edge(&edge);
 //        int64_t brpoint = v0 + v1;
 //    }
+
+
+    igraph_integer_t diameter;
+    igraph_t graph;
+    igraph_rng_seed(igraph_rng_default(), 42);
+    igraph_erdos_renyi_game(&graph, IGRAPH_ERDOS_RENYI_GNP, 1000, 5.0/1000,
+                            IGRAPH_UNDIRECTED, IGRAPH_NO_LOOPS);
+    igraph_diameter(&graph, &diameter, 0, 0, 0, IGRAPH_UNDIRECTED, 1);
+    printf("Diameter of a random graph with average degree 5: %d\n",
+           (int) diameter);
+    igraph_destroy(&graph);
 
     return 0;
 }
