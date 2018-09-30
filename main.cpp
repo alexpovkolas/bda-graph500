@@ -1,4 +1,5 @@
 #include <iostream>
+//#include <igraph/igraph_vector_pmt.h>
 #include "./generator/make_graph.h"
 #include "./generator/graph_generator.h"
 #include "./generator/utils.h"
@@ -7,25 +8,15 @@
 #include "igraph/igraph.h"
 //#include <igraph.h>
 
+#define EDGE_FACTOR 16
 
-
-int main(int argc, char** argv) {
-
-    aml_init(&argc,&argv); //includes MPI_Init inside
-    setup_globals();
-
-
-    int SCALE = 12;
-    int edgefactor = 16;
-
-    int64_t nedges[1];
-    packed_edge* result[1];
-    int64_t nglobaledges = (int64_t)(edgefactor) << SCALE;
-    uint64_t seed1 = 2, seed2 = 3;
-
+void generate_graph(int scale, uint64_t seed1, int seed2, packed_edge** result) {
     double make_graph_start = MPI_Wtime();
 
-    make_graph(SCALE, nglobaledges, seed1, seed2, nedges, result);
+    int64_t nglobaledges = (int64_t)(EDGE_FACTOR) << scale;
+    int64_t nedges[1];
+
+    make_graph(scale, nglobaledges, seed1, seed2, nedges, result);
 
     double make_graph_stop = MPI_Wtime();
     double make_graph_time = make_graph_stop - make_graph_start;
@@ -33,28 +24,68 @@ int main(int argc, char** argv) {
         fprintf(stderr, "graph_generation:               %f s\n", make_graph_time);
     }
 
-    // example of using
+}
 
-//    for (int i = 0; i < *nedges; ++i) {
-//        packed_edge edge = result[0][i];
-//        int64_t v0 = get_v0_from_edge(&edge);
-//        int64_t v1 = get_v1_from_edge(&edge);
-//        int64_t brpoint = v0 + v1;
-//    }
+void generate_igraph(igraph_t *igraph, int scale, uint64_t seed1, int seed2) {
+    igraph_vector_t edges_vector;
 
+    // igraph use 2 item for an edge so we need 2x vector length
+    int64_t nedges = (int64_t)(EDGE_FACTOR) << (scale + 1);
+    packed_edge* result[1];
 
+    generate_graph(scale, seed1, seed2, result);
+
+    double make_graph_start = MPI_Wtime();
+
+    igraph_vector_init(&edges_vector, nedges);
+
+    for (int i = 0; i < nedges/2; ++i) {
+        packed_edge edge = result[0][i];
+        int64_t v0 = get_v0_from_edge(&edge);
+        int64_t v1 = get_v1_from_edge(&edge);
+
+        VECTOR(edges_vector)[i * 2] = v0;
+        VECTOR(edges_vector)[i * 2 + 1] = v1;
+    }
+
+    igraph_bool_t directed = false;
+    igraph_create(igraph, &edges_vector, 0, directed);
+
+    double make_graph_stop = MPI_Wtime();
+    double make_graph_time = make_graph_stop - make_graph_start;
+    if (rank == 0) {
+        fprintf(stderr, "igraph_generation:               %f s\n", make_graph_time);
+    }
+}
+
+igraph_integer_t diameter(igraph_t *igraph){
     igraph_integer_t diameter;
-    igraph_t graph;
-    igraph_rng_seed(igraph_rng_default(), 42);
-    igraph_erdos_renyi_game(&graph, IGRAPH_ERDOS_RENYI_GNP, 1000, 5.0/1000,
-                            IGRAPH_UNDIRECTED, IGRAPH_NO_LOOPS);
-    igraph_diameter(&graph, &diameter, 0, 0, 0, IGRAPH_UNDIRECTED, 1);
-    printf("Diameter of a random graph with average degree 5: %d\n",
-           (int) diameter);
-    igraph_destroy(&graph);
+    igraph_diameter(igraph, &diameter, 0, 0, 0, IGRAPH_UNDIRECTED, 1);
+    return diameter;
+}
 
+
+int main(int argc, char** argv) {
+    aml_init(&argc,&argv); //includes MPI_Init inside
+    setup_globals();
+
+    int SCALE = 8;
+    uint64_t seed1 = 7, seed2 = 1;
+
+    igraph_t graph;
+
+    generate_igraph(&graph, SCALE, seed1, seed2);
+
+    igraph_integer_t diameter = diameter(&graph);
+    printf("Diameter of the graph: %d\n",
+           (int) diameter);
+
+    igraph_destroy(&graph);
+    
     return 0;
 }
+
+
 
 
 
