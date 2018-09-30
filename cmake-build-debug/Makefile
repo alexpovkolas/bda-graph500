@@ -123,6 +123,141 @@ KroneckerGraph/fast:
 	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/build
 .PHONY : KroneckerGraph/fast
 
+aml/aml.o: aml/aml.c.o
+
+.PHONY : aml/aml.o
+
+# target to build an object file
+aml/aml.c.o:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/aml/aml.c.o
+.PHONY : aml/aml.c.o
+
+aml/aml.i: aml/aml.c.i
+
+.PHONY : aml/aml.i
+
+# target to preprocess a source file
+aml/aml.c.i:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/aml/aml.c.i
+.PHONY : aml/aml.c.i
+
+aml/aml.s: aml/aml.c.s
+
+.PHONY : aml/aml.s
+
+# target to generate assembly for a file
+aml/aml.c.s:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/aml/aml.c.s
+.PHONY : aml/aml.c.s
+
+generator/graph_generator.o: generator/graph_generator.c.o
+
+.PHONY : generator/graph_generator.o
+
+# target to build an object file
+generator/graph_generator.c.o:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.o
+.PHONY : generator/graph_generator.c.o
+
+generator/graph_generator.i: generator/graph_generator.c.i
+
+.PHONY : generator/graph_generator.i
+
+# target to preprocess a source file
+generator/graph_generator.c.i:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.i
+.PHONY : generator/graph_generator.c.i
+
+generator/graph_generator.s: generator/graph_generator.c.s
+
+.PHONY : generator/graph_generator.s
+
+# target to generate assembly for a file
+generator/graph_generator.c.s:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.s
+.PHONY : generator/graph_generator.c.s
+
+generator/make_graph.o: generator/make_graph.c.o
+
+.PHONY : generator/make_graph.o
+
+# target to build an object file
+generator/make_graph.c.o:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.o
+.PHONY : generator/make_graph.c.o
+
+generator/make_graph.i: generator/make_graph.c.i
+
+.PHONY : generator/make_graph.i
+
+# target to preprocess a source file
+generator/make_graph.c.i:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.i
+.PHONY : generator/make_graph.c.i
+
+generator/make_graph.s: generator/make_graph.c.s
+
+.PHONY : generator/make_graph.s
+
+# target to generate assembly for a file
+generator/make_graph.c.s:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.s
+.PHONY : generator/make_graph.c.s
+
+generator/splittable_mrg.o: generator/splittable_mrg.c.o
+
+.PHONY : generator/splittable_mrg.o
+
+# target to build an object file
+generator/splittable_mrg.c.o:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.o
+.PHONY : generator/splittable_mrg.c.o
+
+generator/splittable_mrg.i: generator/splittable_mrg.c.i
+
+.PHONY : generator/splittable_mrg.i
+
+# target to preprocess a source file
+generator/splittable_mrg.c.i:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.i
+.PHONY : generator/splittable_mrg.c.i
+
+generator/splittable_mrg.s: generator/splittable_mrg.c.s
+
+.PHONY : generator/splittable_mrg.s
+
+# target to generate assembly for a file
+generator/splittable_mrg.c.s:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.s
+.PHONY : generator/splittable_mrg.c.s
+
+generator/utils.o: generator/utils.c.o
+
+.PHONY : generator/utils.o
+
+# target to build an object file
+generator/utils.c.o:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/utils.c.o
+.PHONY : generator/utils.c.o
+
+generator/utils.i: generator/utils.c.i
+
+.PHONY : generator/utils.i
+
+# target to preprocess a source file
+generator/utils.c.i:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/utils.c.i
+.PHONY : generator/utils.c.i
+
+generator/utils.s: generator/utils.c.s
+
+.PHONY : generator/utils.s
+
+# target to generate assembly for a file
+generator/utils.c.s:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/generator/utils.c.s
+.PHONY : generator/utils.c.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -150,6 +285,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+utils.o: utils.c.o
+
+.PHONY : utils.o
+
+# target to build an object file
+utils.c.o:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/utils.c.o
+.PHONY : utils.c.o
+
+utils.i: utils.c.i
+
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.c.i:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/utils.c.i
+.PHONY : utils.c.i
+
+utils.s: utils.c.s
+
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.c.s:
+	$(MAKE) -f CMakeFiles/KroneckerGraph.dir/build.make CMakeFiles/KroneckerGraph.dir/utils.c.s
+.PHONY : utils.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -159,9 +321,27 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... KroneckerGraph"
+	@echo "... aml/aml.o"
+	@echo "... aml/aml.i"
+	@echo "... aml/aml.s"
+	@echo "... generator/graph_generator.o"
+	@echo "... generator/graph_generator.i"
+	@echo "... generator/graph_generator.s"
+	@echo "... generator/make_graph.o"
+	@echo "... generator/make_graph.i"
+	@echo "... generator/make_graph.s"
+	@echo "... generator/splittable_mrg.o"
+	@echo "... generator/splittable_mrg.i"
+	@echo "... generator/splittable_mrg.s"
+	@echo "... generator/utils.o"
+	@echo "... generator/utils.i"
+	@echo "... generator/utils.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... utils.o"
+	@echo "... utils.i"
+	@echo "... utils.s"
 .PHONY : help
 
 

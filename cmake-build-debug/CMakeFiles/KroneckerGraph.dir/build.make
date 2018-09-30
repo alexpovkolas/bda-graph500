@@ -60,27 +60,117 @@ include CMakeFiles/KroneckerGraph.dir/flags.make
 CMakeFiles/KroneckerGraph.dir/main.cpp.o: CMakeFiles/KroneckerGraph.dir/flags.make
 CMakeFiles/KroneckerGraph.dir/main.cpp.o: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alex/study/KroneckerGraph/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/KroneckerGraph.dir/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KroneckerGraph.dir/main.cpp.o -c /Users/alex/study/KroneckerGraph/main.cpp
+	mpicxx  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KroneckerGraph.dir/main.cpp.o -c /Users/alex/study/KroneckerGraph/main.cpp
 
 CMakeFiles/KroneckerGraph.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/KroneckerGraph.dir/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alex/study/KroneckerGraph/main.cpp > CMakeFiles/KroneckerGraph.dir/main.cpp.i
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alex/study/KroneckerGraph/main.cpp > CMakeFiles/KroneckerGraph.dir/main.cpp.i
 
 CMakeFiles/KroneckerGraph.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/KroneckerGraph.dir/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alex/study/KroneckerGraph/main.cpp -o CMakeFiles/KroneckerGraph.dir/main.cpp.s
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alex/study/KroneckerGraph/main.cpp -o CMakeFiles/KroneckerGraph.dir/main.cpp.s
+
+CMakeFiles/KroneckerGraph.dir/aml/aml.c.o: CMakeFiles/KroneckerGraph.dir/flags.make
+CMakeFiles/KroneckerGraph.dir/aml/aml.c.o: ../aml/aml.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alex/study/KroneckerGraph/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/KroneckerGraph.dir/aml/aml.c.o"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/KroneckerGraph.dir/aml/aml.c.o   -c /Users/alex/study/KroneckerGraph/aml/aml.c
+
+CMakeFiles/KroneckerGraph.dir/aml/aml.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/KroneckerGraph.dir/aml/aml.c.i"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alex/study/KroneckerGraph/aml/aml.c > CMakeFiles/KroneckerGraph.dir/aml/aml.c.i
+
+CMakeFiles/KroneckerGraph.dir/aml/aml.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/KroneckerGraph.dir/aml/aml.c.s"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alex/study/KroneckerGraph/aml/aml.c -o CMakeFiles/KroneckerGraph.dir/aml/aml.c.s
+
+CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.o: CMakeFiles/KroneckerGraph.dir/flags.make
+CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.o: ../generator/graph_generator.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alex/study/KroneckerGraph/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.o"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.o   -c /Users/alex/study/KroneckerGraph/generator/graph_generator.c
+
+CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.i"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alex/study/KroneckerGraph/generator/graph_generator.c > CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.i
+
+CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.s"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alex/study/KroneckerGraph/generator/graph_generator.c -o CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.s
+
+CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.o: CMakeFiles/KroneckerGraph.dir/flags.make
+CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.o: ../generator/make_graph.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alex/study/KroneckerGraph/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.o"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.o   -c /Users/alex/study/KroneckerGraph/generator/make_graph.c
+
+CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.i"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alex/study/KroneckerGraph/generator/make_graph.c > CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.i
+
+CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.s"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alex/study/KroneckerGraph/generator/make_graph.c -o CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.s
+
+CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.o: CMakeFiles/KroneckerGraph.dir/flags.make
+CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.o: ../generator/splittable_mrg.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alex/study/KroneckerGraph/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.o"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.o   -c /Users/alex/study/KroneckerGraph/generator/splittable_mrg.c
+
+CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.i"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alex/study/KroneckerGraph/generator/splittable_mrg.c > CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.i
+
+CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.s"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alex/study/KroneckerGraph/generator/splittable_mrg.c -o CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.s
+
+CMakeFiles/KroneckerGraph.dir/generator/utils.c.o: CMakeFiles/KroneckerGraph.dir/flags.make
+CMakeFiles/KroneckerGraph.dir/generator/utils.c.o: ../generator/utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alex/study/KroneckerGraph/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/KroneckerGraph.dir/generator/utils.c.o"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/KroneckerGraph.dir/generator/utils.c.o   -c /Users/alex/study/KroneckerGraph/generator/utils.c
+
+CMakeFiles/KroneckerGraph.dir/generator/utils.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/KroneckerGraph.dir/generator/utils.c.i"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alex/study/KroneckerGraph/generator/utils.c > CMakeFiles/KroneckerGraph.dir/generator/utils.c.i
+
+CMakeFiles/KroneckerGraph.dir/generator/utils.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/KroneckerGraph.dir/generator/utils.c.s"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alex/study/KroneckerGraph/generator/utils.c -o CMakeFiles/KroneckerGraph.dir/generator/utils.c.s
+
+CMakeFiles/KroneckerGraph.dir/utils.c.o: CMakeFiles/KroneckerGraph.dir/flags.make
+CMakeFiles/KroneckerGraph.dir/utils.c.o: ../utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alex/study/KroneckerGraph/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/KroneckerGraph.dir/utils.c.o"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/KroneckerGraph.dir/utils.c.o   -c /Users/alex/study/KroneckerGraph/utils.c
+
+CMakeFiles/KroneckerGraph.dir/utils.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/KroneckerGraph.dir/utils.c.i"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alex/study/KroneckerGraph/utils.c > CMakeFiles/KroneckerGraph.dir/utils.c.i
+
+CMakeFiles/KroneckerGraph.dir/utils.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/KroneckerGraph.dir/utils.c.s"
+	mpicc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alex/study/KroneckerGraph/utils.c -o CMakeFiles/KroneckerGraph.dir/utils.c.s
 
 # Object files for target KroneckerGraph
 KroneckerGraph_OBJECTS = \
-"CMakeFiles/KroneckerGraph.dir/main.cpp.o"
+"CMakeFiles/KroneckerGraph.dir/main.cpp.o" \
+"CMakeFiles/KroneckerGraph.dir/aml/aml.c.o" \
+"CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.o" \
+"CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.o" \
+"CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.o" \
+"CMakeFiles/KroneckerGraph.dir/generator/utils.c.o" \
+"CMakeFiles/KroneckerGraph.dir/utils.c.o"
 
 # External object files for target KroneckerGraph
 KroneckerGraph_EXTERNAL_OBJECTS =
 
 KroneckerGraph: CMakeFiles/KroneckerGraph.dir/main.cpp.o
+KroneckerGraph: CMakeFiles/KroneckerGraph.dir/aml/aml.c.o
+KroneckerGraph: CMakeFiles/KroneckerGraph.dir/generator/graph_generator.c.o
+KroneckerGraph: CMakeFiles/KroneckerGraph.dir/generator/make_graph.c.o
+KroneckerGraph: CMakeFiles/KroneckerGraph.dir/generator/splittable_mrg.c.o
+KroneckerGraph: CMakeFiles/KroneckerGraph.dir/generator/utils.c.o
+KroneckerGraph: CMakeFiles/KroneckerGraph.dir/utils.c.o
 KroneckerGraph: CMakeFiles/KroneckerGraph.dir/build.make
 KroneckerGraph: CMakeFiles/KroneckerGraph.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alex/study/KroneckerGraph/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable KroneckerGraph"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alex/study/KroneckerGraph/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable KroneckerGraph"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/KroneckerGraph.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
