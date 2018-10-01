@@ -73,6 +73,8 @@ map
 -
 fstream
 -
+string
+-
 
 /usr/local/Cellar/mpich/3.2.1_2/include/mpi.h
 stddef.h
