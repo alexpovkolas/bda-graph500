@@ -13,7 +13,7 @@
 
 
 #define EDGE_FACTOR 16
-#define SCALE 12
+#define SCALE 14
 #define TESTS_AMOUNT 10
 #define SEED 777
 #define DIRECTED true
@@ -30,7 +30,7 @@ void generate_graph(int scale, uint64_t seed1, int seed2, packed_edge** result) 
 void generate_igraph(igraph_t *igraph, int scale, uint64_t seed1, int seed2) {
     igraph_vector_t edges_vector;
 
-    // igraph use 2 item for an edge so we need 2x vector length
+    // igraph use 2 items for an edge so we need 2x vector length
     int64_t nedges = (int64_t)(EDGE_FACTOR) << (scale + 1);
     packed_edge* result;
 
@@ -82,6 +82,13 @@ igraph_real_t avg_distance(igraph_t *igraph){
     return result;
 }
 
+bool is_connected(igraph_t *igraph) {\
+    igraph_bool_t result;
+    igraph_is_connected(igraph, &result,
+                        IGRAPH_WEAK);
+    return result;
+}
+
 void hist(igraph_t *igraph, vector<int> &frequencies){
     igraph_vector_t v;
 
@@ -120,7 +127,7 @@ void test_kronecker_graph() {
 
     std::mt19937 rng;
     rng.seed(std::random_device()());
-    std::uniform_int_distribution<std::mt19937::result_type> dist(1,100); // distribution in range [1, 6]
+    std::uniform_int_distribution<std::mt19937::result_type> dist(1,100);
 
     double tests_start = MPI_Wtime();
 
@@ -132,6 +139,7 @@ void test_kronecker_graph() {
     double distance_sum = 0;
 
     int nvert = 1 << scale;
+    int connected_graphs = 0;
     vector<int> histogram(nvert, 0);
     for (int k = 0; k < test_amount; ++k) {
         uint64_t seed1 = k * seed, seed2 = k + seed;
@@ -143,6 +151,7 @@ void test_kronecker_graph() {
         diameter_sum += diameter(&graph);
         distance_sum += avg_distance(&graph);
         hist(&graph, histogram);
+        connected_graphs += is_connected(&graph) ? 1 : 0;
 
 
         igraph_destroy(&graph);
@@ -150,6 +159,7 @@ void test_kronecker_graph() {
 
     double avg_diameter = diameter_sum  / (double)test_amount;
     double avg_distance = distance_sum  / (double)test_amount;
+    double avg_connected = connected_graphs  / (double)test_amount;
 
     printf("Avg diameter of the graph: %f\n",
            avg_diameter);
@@ -157,7 +167,12 @@ void test_kronecker_graph() {
     printf("Avg distance of the graph: %f\n",
            avg_distance);
 
-    print_hist(histogram, nvert, TESTS_AMOUNT, "output_kronecker");
+    printf("Connection probability of the graph: %f\n",
+           avg_connected);
+
+    print_hist(histogram, nvert, TESTS_AMOUNT, "output_kronecker_100");
+    print_hist(histogram, nvert, TESTS_AMOUNT, "output_kronecker_10", 10);
+    print_hist(histogram, nvert, TESTS_AMOUNT, "output_kronecker_1", 1);
 
     double tests_stop = MPI_Wtime();
     double tests_time = tests_stop - tests_start;
@@ -169,12 +184,13 @@ void test_barabasi_albert_graph() {
 
     double tests_start = MPI_Wtime();
 
-    int test_amount = 2;
+    int test_amount = 100;
     int diameter_sum = 0;
     double distance_sum = 0;
 
-    int n = 1000000;
-    int m = 16;
+    int n = 10000;
+    int m = 20;
+    int connected_graphs = 0;
     vector<int> histogram(n, 0);
     for (int k = 0; k < test_amount; ++k) {
 
@@ -186,6 +202,8 @@ void test_barabasi_albert_graph() {
         diameter_sum += diameter(&graph);
         distance_sum += avg_distance(&graph);
         hist(&graph, histogram);
+        connected_graphs += is_connected(&graph) ? 1 : 0;
+
 
 
         igraph_destroy(&graph);
@@ -193,6 +211,7 @@ void test_barabasi_albert_graph() {
 
     double avg_diameter = diameter_sum  / (double)test_amount;
     double avg_distance = distance_sum  / (double)test_amount;
+    double avg_connected = connected_graphs  / (double)test_amount;
 
     printf("Avg diameter of the graph: %f\n",
            avg_diameter);
@@ -200,7 +219,14 @@ void test_barabasi_albert_graph() {
     printf("Avg distance of the graph: %f\n",
            avg_distance);
 
-    print_hist(histogram, n, test_amount, "output_barabasi_albert", 10);
+    printf("Connection probability of the graph: %f\n",
+           avg_connected);
+
+
+    print_hist(histogram, n, TESTS_AMOUNT, "output_barabasi_albert_100");
+    print_hist(histogram, n, TESTS_AMOUNT, "output_barabasi_albert_10", 10);
+    print_hist(histogram, n, TESTS_AMOUNT, "output_barabasi_albert_1", 1);
+
 
     double tests_stop = MPI_Wtime();
     double tests_time = tests_stop - tests_start;
