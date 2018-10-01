@@ -7,28 +7,23 @@
 #include "igraph/igraph.h"
 #include <random>
 #include <map>
+#include <fstream>
+
 
 
 #define EDGE_FACTOR 16
 #define SCALE 12
-#define TESTS_AMOUNT 10
+#define TESTS_AMOUNT 1000
 #define SEED 777
-#define DIRECTED false
+#define DIRECTED true
 
 using namespace std;
 
 void generate_graph(int scale, uint64_t seed1, int seed2, packed_edge** result) {
-    double make_graph_start = MPI_Wtime();
-
     int64_t nglobaledges = (int64_t) (EDGE_FACTOR) << scale;
     int64_t nedges[1];
 
     make_graph(scale, nglobaledges, seed1, seed2, nedges, result);
-
-    double make_graph_stop = MPI_Wtime();
-    double make_graph_time = make_graph_stop - make_graph_start;
-
-    fprintf(stderr, "graph_generation:               %f s\n", make_graph_time);
 }
 
 void generate_igraph(igraph_t *igraph, int scale, uint64_t seed1, int seed2) {
@@ -39,8 +34,6 @@ void generate_igraph(igraph_t *igraph, int scale, uint64_t seed1, int seed2) {
     packed_edge* result;
 
     generate_graph(scale, seed1, seed2, &result);
-
-    double make_graph_start = MPI_Wtime();
 
     igraph_vector_init(&edges_vector, nedges);
 
@@ -56,11 +49,6 @@ void generate_igraph(igraph_t *igraph, int scale, uint64_t seed1, int seed2) {
     free(result);
 
     igraph_create(igraph, &edges_vector, 0, IGRAPH_DIRECTED);
-
-    double make_graph_stop = MPI_Wtime();
-    double make_graph_time = make_graph_stop - make_graph_start;
-
-    fprintf(stderr, "igraph_generation:               %f s\n", make_graph_time);
 }
 
 igraph_integer_t diameter(igraph_t *igraph){
@@ -75,30 +63,18 @@ igraph_real_t avg_distance(igraph_t *igraph){
     return result;
 }
 
-map<int, int> hist(igraph_t *igraph){
+void hist(igraph_t *igraph, vector<int> &frequencies){
     igraph_vector_t v;
 
     igraph_vector_init(&v, 0);
 
-    igraph_degree(igraph, &v, igraph_vss_all(), IGRAPH_ALL, IGRAPH_LOOPS);
+    igraph_degree(igraph, &v, igraph_vss_all(), IGRAPH_ALL, IGRAPH_NO_LOOPS);
 
-    map<int, int> frequencies;
     for (long i=0; i<igraph_vector_size(&v); i++) {
         int degree = (long int) VECTOR(v)[i];
-        if (degree < 100) {
-            frequencies[degree]++;
-        }
 
-//        if (degree < 10) {
-//            frequencies[degree]++;
-//        } else if (degree < 100) {
-//            frequencies[degree / 10 * 10]++;
-//        } else {
-//            frequencies[degree / 100 * 100]++;
-//        }
+        frequencies[degree] += 1;
     }
-
-    return frequencies;
 }
 
 
@@ -108,20 +84,19 @@ int main(int argc, char** argv) {
 
     std::mt19937 rng;
     rng.seed(std::random_device()());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(1,6); // distribution in range [1, 6]
+    std::uniform_int_distribution<std::mt19937::result_type> dist(1,100); // distribution in range [1, 6]
 
     double tests_start = MPI_Wtime();
 
     int scale = SCALE;
     int test_amount = TESTS_AMOUNT;
-    int seed = dist6(rng);
+    int seed = dist(rng);
 
     int diameter_sum = 0;
     double distance_sum = 0;
 
-
-    map<int, int> histogram;
-    igraph_integer_t nedges;
+    int nvert = 1 << scale;
+    vector<int> histogram(nvert, 0);
     for (int k = 0; k < test_amount; ++k) {
         uint64_t seed1 = k * seed, seed2 = k + seed;
 
@@ -131,13 +106,9 @@ int main(int argc, char** argv) {
 
         diameter_sum += diameter(&graph);
         distance_sum += avg_distance(&graph);
-        map<int, int> hist_map = hist(&graph);
+        hist(&graph, histogram);
 
-        for(auto it = hist_map.cbegin(); it != hist_map.cend(); ++it) {
-            histogram[it->first] += it->second;
-        }
 
-        nedges = igraph_ecount(&graph);
         igraph_destroy(&graph);
     }
 
@@ -150,37 +121,28 @@ int main(int argc, char** argv) {
     printf("Avg distance of the graph: %f\n",
            avg_distance);
 
-    for(auto it = histogram.cbegin(); it != histogram.cend(); ++it) {
-        cout << it->first << "\n";
-    }
+    ofstream output("output", ios_base::out | ios_base::trunc);
 
+
+    int block = 100;
+    int i = 0;
+    int acc = 0;
     for(auto it = histogram.cbegin(); it != histogram.cend(); ++it) {
-        cout << it->second / (double) nedges * 100 << "\n";
+
+        if (i < block) {
+            acc += *it;
+            ++i;
+        } else {
+            output << acc / (double) TESTS_AMOUNT / nvert << "\n";
+            acc = *it;
+            i = 1;
+        }
     }
 
     double tests_stop = MPI_Wtime();
     double tests_time = tests_stop - tests_start;
 
     fprintf(stderr, "running time:               %f s\n", tests_time);
-
-
-//    igraph_t g;
-//    igraph_vector_t v, seq;
-//    int ret;
-//    igraph_integer_t mdeg, nedges;
-//    long int i;
-//    long int ndeg;
-//
-//    /* Create graph */
-//    igraph_vector_init(&v, 8);
-//    VECTOR(v)[0]=0; VECTOR(v)[1]=1;
-//    VECTOR(v)[2]=1; VECTOR(v)[3]=2;
-//    VECTOR(v)[4]=2; VECTOR(v)[5]=3;
-//    VECTOR(v)[6]=2; VECTOR(v)[7]=2;
-//    igraph_create(&g, &v, 0, IGRAPH_DIRECTED);
-//
-//    igraph_degree(&g, &v, igraph_vss_all(), IGRAPH_ALL, IGRAPH_LOOPS);
-//    print_vector(&v, stdout);
 
 
     return 0;
